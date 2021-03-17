@@ -1,10 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import { CardContent, CardActions, Link, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -18,8 +15,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function Player({ playerData }) {
   const classes = useStyles();
+
+  if (!playerData.name) return "";
 
   return (
     <Card className={classes.root}>
@@ -29,18 +28,25 @@ export default function SimpleCard() {
           color="textSecondary"
           gutterBottom
         >
-          name
+          {playerData.name}
         </Typography>
         <Typography variant="h5" component="h2">
-          username
+          {playerData.username}
         </Typography>
-        <Typography>location</Typography>
+        <Typography>{playerData.location}</Typography>
         <Typography variant="body2" component="p">
-          status
+          {playerData.status}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Go to official page</Button>
+        <Link
+          variant="body2"
+          target="_blank"
+          rel="noopener"
+          href={playerData.url}
+        >
+          official page
+        </Link>
       </CardActions>
     </Card>
   );

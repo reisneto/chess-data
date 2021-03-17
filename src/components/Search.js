@@ -21,22 +21,10 @@ const useStyles = makeStyles((theme) => ({
  
 }));
 
-export default function Search() {
+export default function Search({ onSubmit }) {
   const classes= useStyles();
   const [player, setPlayer] = useState('');
-  
-  const getPlayerData = async(player) => {
-    const baseURL = 'https://api.chess.com/pub/player';
-    const playerRawData = await fetch(`${baseURL}/${player}`);
-    const playerData = await playerRawData.json();
-    alert(JSON.stringify(playerData));
-    return
-  }
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    getPlayerData(player);
-  };
 
   return (
     <Paper component="form" className={classes.root} margin="normal">
@@ -51,7 +39,7 @@ export default function Search() {
         className={classes.iconButton}
         type="submit"
         aria-label="search"
-        onClick={onSubmit}
+        onClick={(event) => onSubmit(event, player)}
       >
         <SearchIcon />
       </IconButton>
