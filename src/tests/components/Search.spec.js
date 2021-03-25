@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import Search from "../../components/Search";
 import thunk from "redux-thunk";
-import fetchMock from "fetch-mock";
 import configureMockStore from "redux-mock-store";
 import initiaState from "../../reducers/initialState";
 import { Provider } from "react-redux";
