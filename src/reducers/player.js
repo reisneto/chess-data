@@ -6,6 +6,7 @@ export default function playerReducer(state = initialState.player, action) {
       return {
         ...state,
         data: {
+          avatar: action.player.avatar,
           name: action.player.name,
           username: action.player.username,
           url: action.player.url,
@@ -14,7 +15,6 @@ export default function playerReducer(state = initialState.player, action) {
       };
 
     default:
-      break;
+      return state;
   }
-  return state;
 }

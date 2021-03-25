@@ -40,12 +40,14 @@ export default function Search() {
         inputProps={{ "aria-label": "search chess player" }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        data-testid="search-input"
       />
       <IconButton
         className={classes.iconButton}
         type="submit"
         aria-label="search"
         onClick={(event) => onSubmit(event, search)}
+        data-testid="search-submit"
       >
         <SearchIcon />
       </IconButton>
