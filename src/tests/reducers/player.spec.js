@@ -14,6 +14,8 @@ const action = {
 };
 
 const data = {
+  loading: false,
+  error: false,
   data: {
     avatar:
       "https://images.chesscomfiles.com/uploads/v1/user/62606342.13618355.200x200o.e158e6510806.jpeg",

@@ -1,7 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import { CardContent, CardActions, Link, Typography } from "@material-ui/core";
+import {
+  CardContent,
+  CardActions,
+  Link, 
+  Typography,
+  CircularProgress
+} from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
@@ -18,7 +24,9 @@ const useStyles = makeStyles({
 
 export default function Player() {
   const classes = useStyles();
-  const playerData = useSelector((state) => state.player.data);
+  const { data: playerData, loading } = useSelector((state) => state.player);
+
+  if (loading) return <CircularProgress />
 
   if (!playerData.name) return "";
 

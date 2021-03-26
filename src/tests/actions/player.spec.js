@@ -47,11 +47,13 @@ describe("action player", () => {
         headers: { "content-type": "application/json" },
       });
 
-      const expectedActions = { type: "SEARCH_PLAYER", player: storeData };
+      const expectedActions = [{ type: "LOADING_PLAYER" },
+      { type: "SEARCH_PLAYER", player: storeData }
+      ];
 
       const store = mockStore(initiaState);
       return store.dispatch(actions.searchPlayer(player)).then(() => {
-        expect(store.getActions()).toEqual([expectedActions]);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
 
@@ -69,11 +71,46 @@ describe("action player", () => {
 
       await actions.searchPlayer('reisneto')(dispatchMock);
 
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledTimes(2);
       expect(dispatchMock).toHaveBeenCalledWith({
         type: "SEARCH_PLAYER",
         player: storeData
       });
     });
+
+    it('should change loading to true while searching player', async () => {
+      const dispatchMock = jest.fn();
+      jest
+        .spyOn(playerService, 'getPlayer')
+        .mockResolvedValue(storeData);
+
+      await actions.searchPlayer('reisneto')(dispatchMock);
+      expect(dispatchMock).toHaveBeenCalledTimes(2);
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: "LOADING_PLAYER"
+      });
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: "SEARCH_PLAYER",
+        player: storeData
+      });
+    });
+
+    it('should change error to true if occurs an error while searching player', async () => {
+      const dispatchMock = jest.fn();
+      jest
+        .spyOn(playerService, 'getPlayer')
+        .mockImplementation(() => { throw new Error });
+      await actions.searchPlayer('username')(dispatchMock);
+      expect(dispatchMock).toHaveBeenCalledTimes(2);
+
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: "LOADING_PLAYER"
+      });
+
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: "ERROR_PLAYER"
+      });
+    });
+
   });
 });

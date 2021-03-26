@@ -1,11 +1,13 @@
 export const initialState = {
   player: {
+    loading: false,
+    error: false,
     data: {
-      avatar: 'https://wwww.test.com',
-      name: 'name1',
-      username:'username1',
-      url: 'https://wwww.google.com',
-      location: 'HUE',
+      avatar: '',
+      name: '',
+      username:'',
+      url: '',
+      location: '',
     }
   }
 };
