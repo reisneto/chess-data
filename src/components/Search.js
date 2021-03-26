@@ -7,11 +7,7 @@ import * as actions from "../actions/player";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "2px 4px",
-    marginBottom: "20px",
     display: "flex",
-    alignItems: "center",
-    width: 400,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -33,7 +29,7 @@ export default function Search() {
   }
 
   return (
-    <Paper component="form" className={classes.root} margin="normal">
+    <Paper component="form" className={classes.root}>
       <InputBase
         className={classes.input}
         placeholder="Search a chess player"
