@@ -3,12 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import {
   CardContent,
+  CardHeader,
   CardActions,
-  Link, 
+  Link,
   Typography,
+  Avatar,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import Loading from './Loading';
+import Loading from "./Loading";
+import Idle from "./Idle";
 
 const useStyles = makeStyles((theme) => ({
   player: {
@@ -21,26 +24,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Player() {
   const classes = useStyles();
-  const { data: playerData, loading } = useSelector((state) => state.player);
+  const { data: playerData, status } = useSelector((state) => state.player);
+  const feedback = {
+    IDLE: <Idle />,
+    LOADING: <Loading />,
+    NOT_FOUND: <h1>not found</h1>,
+    ERROR: <h1>ops, something bad happened, please try again...</h1>,
+  };
 
-  if (loading) return <Loading />
-
-  if (!playerData.name) return "";
+  if (status !== "FOUND") return feedback[status];
 
   return (
     <Card className={classes.player}>
+      <CardHeader
+        avatar={<Avatar alt="user image" src={playerData.avatar} />}
+        title={playerData.name}
+        subheader={playerData.username}
+      />
+
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {playerData.name}
-        </Typography>
-        <Typography variant="h5" component="h2">
-          {playerData.username}
-        </Typography>
-        <Typography>{playerData.location}</Typography>
+        {playerData.location && (
+          <Typography>From {playerData.location}</Typography>
+        )}
         <Typography variant="body2" component="p">
           {playerData.status}
         </Typography>
