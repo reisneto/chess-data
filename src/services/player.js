@@ -1,3 +1,5 @@
+import config from '../config/default.json';
+
 function format(playerData) {
   return {
     avatar: playerData.avatar,
@@ -9,7 +11,7 @@ function format(playerData) {
 }
 
 async function getPlayer(username) {
-  const baseURL = "https://api.chess.com/pub/player";
+  const baseURL = config.chess_api;
   const playerRawData = await fetch(`${baseURL}/${username}`);
   const playerData = await playerRawData.json();
   if (playerData.username)
